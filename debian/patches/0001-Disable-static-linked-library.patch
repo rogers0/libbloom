@@ -1,0 +1,38 @@
+From: Roger Shimizu <rogershimizu@gmail.com>
+Date: Fri, 24 Feb 2017 23:55:52 +0900
+Subject: Disable static linked library
+
+---
+ Makefile | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 76e0577..d408849 100644
+--- a/Makefile
++++ b/Makefile
+@@ -87,7 +87,7 @@ OPT=-O3
+ endif
+ 
+ 
+-all: $(BUILD)/$(SO_VERSIONED) $(BUILD)/libbloom.a
++all: $(BUILD)/$(SO_VERSIONED)
+ 
+ $(BUILD)/$(SO_VERSIONED): $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
+ 	(cd $(BUILD) && \
+@@ -102,11 +102,12 @@ $(BUILD)/libbloom.a: $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
+ $(BUILD)/test-libbloom: $(TESTDIR)/test.c $(BUILD)/$(SO_VERSIONED)
+ 	$(COM) -I$(TOP) -c $(TESTDIR)/test.c -o $(BUILD)/test.o
+ 	(cd $(BUILD) && \
+-	    $(COM) test.o -L$(BUILD) $(RPATH) -lbloom -o test-libbloom)
++	    $(COM) $(LDFLAGS) $(LIB) test.o -L$(BUILD) $(RPATH) -lbloom -o test-libbloom)
+ 
+-$(BUILD)/test-basic: $(TESTDIR)/basic.c $(BUILD)/libbloom.a
+-	$(COM) -I$(TOP) $(LIB) \
+-	    $(TESTDIR)/basic.c $(BUILD)/libbloom.a -o $(BUILD)/test-basic
++$(BUILD)/test-basic: $(TESTDIR)/basic.c $(BUILD)/$(SO_VERSIONED)
++	$(COM) -I$(TOP) -c $(TESTDIR)/basic.c -o $(BUILD)/basic.o
++	(cd $(BUILD) && \
++	    $(COM) $(LDFLAGS) $(LIB) basic.o -L$(BUILD) $(RPATH) -lbloom -o test-basic)
+ 
+ $(BUILD)/%.o: %.c
+ 	mkdir -p $(BUILD)

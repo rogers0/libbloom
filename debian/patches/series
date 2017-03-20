@@ -1,0 +1,3 @@
+backport/0001-Fix-shared-library-names-on-OS-X-build.patch
+backport/0002-Clean-up-makefile.patch
+0001-Disable-static-linked-library.patch

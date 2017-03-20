@@ -1,0 +1,44 @@
+From: Roger Shimizu <rogershimizu@gmail.com>
+Date: Fri, 24 Feb 2017 21:00:48 +0900
+Subject: Clean up makefile
+
+Build only one .so library with version, all other names become symbolic
+links, like following:
+
+ libbloom.so -> libbloom.so.1
+ libbloom.so.1 -> libbloom.so.1.4
+ libbloom.so.1.4
+---
+ Makefile | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d2b9200..cbd79a9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -78,19 +78,19 @@ OPT=-O3
+ endif
+ 
+ 
+-all: $(BUILD)/libbloom.$(SO) $(BUILD)/libbloom.a
++all: $(BUILD)/$(SO_VERSIONED) $(BUILD)/libbloom.a
+ 
+-$(BUILD)/libbloom.$(SO): $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
++$(BUILD)/$(SO_VERSIONED): $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
+ 	(cd $(BUILD) && \
+ 	    $(COM) $(LDFLAGS) bloom.o murmurhash2.o -shared $(LIB) $(MAC) \
+-		$(LD_SONAME) -o libbloom.$(SO) && \
+-		cp -p libbloom.$(SO) $(SO_VERSIONED) && \
+-		ln -s $(SO_VERSIONED) $(BLOOM_SONAME))
++		$(LD_SONAME) -o $(SO_VERSIONED) && \
++		ln -s $(SO_VERSIONED) $(BLOOM_SONAME) && \
++		ln -s $(BLOOM_SONAME) libbloom.$(SO))
+ 
+ $(BUILD)/libbloom.a: $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
+ 	(cd $(BUILD) && ar rcs libbloom.a bloom.o murmurhash2.o)
+ 
+-$(BUILD)/test-libbloom: $(TESTDIR)/test.c $(BUILD)/libbloom.$(SO)
++$(BUILD)/test-libbloom: $(TESTDIR)/test.c $(BUILD)/$(SO_VERSIONED)
+ 	$(COM) -I$(TOP) -c $(TESTDIR)/test.c -o $(BUILD)/test.o
+ 	(cd $(BUILD) && \
+ 	    $(COM) test.o -L$(BUILD) $(RPATH) -lbloom -o test-libbloom)

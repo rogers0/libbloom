@@ -1,0 +1,28 @@
+Source: libbloom
+Section: libs
+Priority: optional
+Maintainer: Roger Shimizu <rogershimizu@gmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 3.9.8
+Homepage: https://github.com/jvirkki/libbloom
+
+Package: libbloom-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libbloom1 (= ${binary:Version}),${misc:Depends}
+Description: simple and small bloom filter implementation in C (development files)
+ It implements bloom filters:
+  http://en.wikipedia.org/wiki/Bloom_filter
+ .
+ This package provides C header files for the library.
+
+Package: libbloom1
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: simple and small bloom filter implementation in C
+ It implements bloom filters:
+  http://en.wikipedia.org/wiki/Bloom_filter
+ .
+ This package provides shared library.
