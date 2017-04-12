@@ -9,6 +9,12 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 CFLAGS+=-I/usr/include/$(DEB_TARGET_MULTIARCH)
 
+override_dh_auto_build:
+	make BITS=default
+
+override_dh_auto_test:
+	make BITS=default test
+
 override_dh_auto_install:
 	mkdir -p usr/lib/$(DEB_TARGET_GNU_TYPE)
 	cp -a build/libbloom.so* usr/lib/$(DEB_TARGET_GNU_TYPE)/
