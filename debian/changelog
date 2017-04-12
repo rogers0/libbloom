@@ -1,4 +1,4 @@
-libbloom (1.4-2) UNRELEASED; urgency=medium
+libbloom (1.4-2) unstable; urgency=medium
 
   * debian/patches:
     - backport a patch from upstream to enable BITS setting.
@@ -9,7 +9,7 @@ libbloom (1.4-2) UNRELEASED; urgency=medium
       Apparently the BITS setting (-m32/-m64) is merely for solaris,
       so we simply ignore this in debian.
 
- -- Roger Shimizu <rogershimizu@gmail.com>  Thu, 13 Apr 2017 00:49:53 +0900
+ -- Roger Shimizu <rogershimizu@gmail.com>  Thu, 13 Apr 2017 01:22:07 +0900
 
 libbloom (1.4-1) unstable; urgency=low
 
