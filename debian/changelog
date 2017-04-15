@@ -1,3 +1,12 @@
+libbloom (1.4-3) UNRELEASED; urgency=medium
+
+  * debian/copyright:
+    - Move the paragraph of MIT/Expat license to the right position.
+      Text copy of MIT/Expat license is from debmake package:
+        /usr/share/debmake/extra4/Expat
+
+ -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 15 Apr 2017 10:32:59 +0900
+
 libbloom (1.4-2) unstable; urgency=medium
 
   * debian/patches:
