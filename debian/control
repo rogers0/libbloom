@@ -5,6 +5,8 @@ Maintainer: Roger Shimizu <rogershimizu@gmail.com>
 Build-Depends: debhelper (>= 10)
 Standards-Version: 3.9.8
 Homepage: https://github.com/jvirkki/libbloom
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/libbloom.git
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/libbloom.git
 
 Package: libbloom-dev
 Section: libdevel
