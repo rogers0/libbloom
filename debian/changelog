@@ -6,6 +6,11 @@ libbloom (1.4-3) UNRELEASED; urgency=medium
         /usr/share/debmake/extra4/Expat
   * debian/control:
     - Add collab-maint Vcs repo.
+  * debian/rules:
+    - Fix Multi-Arch triplet directory.
+      Install library files into /usr/lib/${DEB_TARGET_MULTIARCH}
+      directory, instead of /usr/lib/${DEB_TARGET_GNU_TYPE}.
+      Should be the right triplet directory this time.
 
  -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 15 Apr 2017 10:32:59 +0900
 

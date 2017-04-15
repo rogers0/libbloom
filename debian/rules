@@ -16,8 +16,8 @@ override_dh_auto_test:
 	make BITS=default test
 
 override_dh_auto_install:
-	mkdir -p usr/lib/$(DEB_TARGET_GNU_TYPE)
-	cp -a build/libbloom.so* usr/lib/$(DEB_TARGET_GNU_TYPE)/
+	mkdir -p usr/lib/$(DEB_TARGET_MULTIARCH)
+	cp -a build/libbloom.so* usr/lib/$(DEB_TARGET_MULTIARCH)/
 	dh_auto_install
 
 %:
