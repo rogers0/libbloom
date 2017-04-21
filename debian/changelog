@@ -1,4 +1,4 @@
-libbloom (1.4-3) UNRELEASED; urgency=medium
+libbloom (1.4-3) unstable; urgency=medium
 
   * debian/copyright:
     - Move the paragraph of MIT/Expat license to the right position.
@@ -15,7 +15,7 @@ libbloom (1.4-3) UNRELEASED; urgency=medium
     - Add a missing quotes mark after the equal mark. Now uscan
       command can work as expected.
 
- -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 15 Apr 2017 10:32:59 +0900
+ -- Roger Shimizu <rogershimizu@gmail.com>  Fri, 21 Apr 2017 22:28:08 +0900
 
 libbloom (1.4-2) unstable; urgency=medium
 
