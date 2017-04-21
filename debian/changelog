@@ -11,6 +11,9 @@ libbloom (1.4-3) UNRELEASED; urgency=medium
       Install library files into /usr/lib/${DEB_TARGET_MULTIARCH}
       directory, instead of /usr/lib/${DEB_TARGET_GNU_TYPE}.
       Should be the right triplet directory this time.
+  * debian/watch:
+    - Add a missing quotes mark after the equal mark. Now uscan
+      command can work as expected.
 
  -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 15 Apr 2017 10:32:59 +0900
 
