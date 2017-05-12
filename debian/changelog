@@ -1,3 +1,11 @@
+libbloom (1.4-4) UNRELEASED; urgency=medium
+
+  * debian/patches:
+    - Add patch to extend RPATH setting to GNU/kFreeBSD and Hurd.
+      Hopefully to fix FTBFS issue on the two platforms.
+
+ -- Roger Shimizu <rogershimizu@gmail.com>  Fri, 12 May 2017 23:29:54 +0900
+
 libbloom (1.4-3) unstable; urgency=medium
 
   * debian/copyright:

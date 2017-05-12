@@ -2,3 +2,4 @@ backport/0001-Fix-shared-library-names-on-OS-X-build.patch
 backport/0002-Clean-up-makefile.patch
 backport/0003-github-6-Add-BITS-env-var-support-in-Makefile.patch
 0001-Disable-static-linked-library.patch
+0004-Extend-RPATH-setting-for-GNU-kFreeBSD-and-Hurd.patch

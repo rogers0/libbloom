@@ -1,0 +1,28 @@
+From: Roger Shimizu <rogershimizu@gmail.com>
+Date: Fri, 12 May 2017 00:10:52 +0900
+Subject: Extend RPATH setting for GNU/kFreeBSD and Hurd
+
+Fix FTBFS issue on GNU/kFreeBSD and Hurd
+
+Closes: #860506
+---
+ Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index d408849..e838e0c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -57,8 +57,12 @@ SO=so
+ 
+ 
+ ifeq ($(BUILD_OS),Linux)
++ifeq ($(BUILD_OS),GNU/kFreeBSD)
++ifeq ($(BUILD_OS),GNU/Hurd)
+ RPATH=-Wl,-rpath,$(BUILD)
+ endif
++endif
++endif
+ 
+ ifeq ($(BUILD_OS),SunOS)
+ RPATH=-R$(BUILD)
