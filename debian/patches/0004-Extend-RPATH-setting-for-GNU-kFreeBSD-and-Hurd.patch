@@ -3,6 +3,8 @@ Date: Fri, 12 May 2017 00:10:52 +0900
 Subject: Extend RPATH setting for GNU/kFreeBSD and Hurd
 
 Fix FTBFS issue on GNU/kFreeBSD and Hurd
+result of command `uname` can reference:
+  http://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
 
 Closes: #860506
 ---
@@ -10,7 +12,7 @@ Closes: #860506
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index d408849..665c9c2 100644
+index d408849..71324c5 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -56,7 +56,7 @@ LD_SONAME=-Wl,-soname,$(BLOOM_SONAME)
@@ -18,7 +20,7 @@ index d408849..665c9c2 100644
  
  
 -ifeq ($(BUILD_OS),Linux)
-+ifeq ($(BUILD_OS),$(filter $(BUILD_OS), GNU/kFreeBSD GNU/Hurd Linux))
++ifeq ($(BUILD_OS),$(filter $(BUILD_OS), GNU/kFreeBSD GNU Linux))
  RPATH=-Wl,-rpath,$(BUILD)
  endif
  
