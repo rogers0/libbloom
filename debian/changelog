@@ -11,7 +11,7 @@ libbloom (1.4-5) unstable; urgency=medium
 
   * debian/patches:
     - Amend previous patch (0004) that FTBFS on buildd all ARCHs.
-      (Closes: #858026, #862445).
+      (Closes: #860506, #862445).
 
  -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 13 May 2017 10:53:19 +0900
 
