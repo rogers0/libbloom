@@ -1,3 +1,11 @@
+libbloom (1.5-1) UNRELEASED; urgency=medium
+
+  * New upstream version 1.5
+  * debian/patches:
+    - Remove backported patches.
+
+ -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 10 Jun 2017 00:38:18 +0900
+
 libbloom (1.4-6) unstable; urgency=medium
 
   * Fix the typo of bug number in previous release (1.4-5).
