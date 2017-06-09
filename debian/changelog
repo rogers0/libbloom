@@ -1,12 +1,12 @@
-libbloom (1.5-1) UNRELEASED; urgency=medium
+libbloom (1.5-1) unstable; urgency=medium
 
-  * New upstream version 1.5
+  * New upstream version 1.5 (Closes: #862769)
   * debian/patches:
     - Remove backported patches.
   * debian/copyright:
     - Update the copyright year.
 
- -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 10 Jun 2017 00:38:18 +0900
+ -- Roger Shimizu <rogershimizu@gmail.com>  Sat, 10 Jun 2017 00:50:27 +0900
 
 libbloom (1.4-6) unstable; urgency=medium
 
