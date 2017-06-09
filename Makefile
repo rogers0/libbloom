@@ -10,7 +10,8 @@
 # Other build options:
 #
 #   DEBUG=1 make        to build debug instead of optimized
-#   MM=-m32 make        to build 32bit library
+#   BITS=32 make        to build 32bit library
+#   BITS=default make   to build platform default bitness (32 or 64)
 #
 # Other build targets:
 #
@@ -20,8 +21,9 @@
 #   make clean          the usual
 #
 
-BLOOM_VERSION=1.4
-BLOOM_SONAME=libbloom.so.1
+BLOOM_VERSION_MAJOR=1
+BLOOM_VERSION_MINOR=5
+BLOOM_VERSION=$(BLOOM_VERSION_MAJOR).$(BLOOM_VERSION_MINOR)
 
 TOP := $(shell /bin/pwd)
 BUILD_OS := $(shell uname)
@@ -32,30 +34,50 @@ LIB=-lm
 COM=${CC} $(CFLAGS) $(CPPFLAGS) -Wall ${OPT} ${MM} -std=c99 -fPIC -DBLOOM_VERSION=$(BLOOM_VERSION)
 TESTDIR=$(TOP)/misc/test
 
-ifeq ($(MM),)
+ifeq ($(BITS),)
 MM=-m64
+else ifeq ($(BITS),64)
+MM=-m64
+else ifeq ($(BITS),32)
+MM=-m32
+else ifeq ($(BITS),default)
+MM=
+else
+MM=$(BITS)
 endif
 
-ifeq ($(BUILD_OS),Linux)
-RPATH=-Wl,-rpath,$(BUILD)
+#
+# Shared library names - these definitions work on most platforms but can
+# be overridden in the platform-specific sections below.
+#
+BLOOM_SONAME=libbloom.so.$(BLOOM_VERSION_MAJOR)
+SO_VERSIONED=libbloom.so.$(BLOOM_VERSION)
+LD_SONAME=-Wl,-soname,$(BLOOM_SONAME)
 SO=so
+
+
+ifeq ($(BUILD_OS),$(filter $(BUILD_OS), GNU/kFreeBSD GNU Linux))
+RPATH=-Wl,-rpath,$(BUILD)
 endif
 
 ifeq ($(BUILD_OS),SunOS)
 RPATH=-R$(BUILD)
-SO=so
 CC=gcc
 endif
 
 ifeq ($(BUILD_OS),OpenBSD)
 RPATH=-R$(BUILD)
-SO=so
 endif
 
 ifeq ($(BUILD_OS),Darwin)
-MAC=-install_name $(BUILD)/libbloom.dylib
+MAC=-install_name $(BUILD)/libbloom.dylib \
+	-compatibility_version $(BLOOM_VERSION_MAJOR) \
+	-current_version $(BLOOM_VERSION)
 RPATH=-Xlinker -rpath -Xlinker $(BUILD)
 SO=dylib
+BLOOM_SONAME=libbloom.$(BLOOM_VERSION_MAJOR).$(SO)
+SO_VERSIONED=libbloom.$(BLOOM_VERSION).$(SO)
+LD_SONAME=
 endif
 
 ifeq ($(DEBUG),1)
@@ -65,19 +87,19 @@ OPT=-O3
 endif
 
 
-all: $(BUILD)/libbloom.$(SO) $(BUILD)/libbloom.a
+all: $(BUILD)/$(SO_VERSIONED) $(BUILD)/libbloom.a
 
-$(BUILD)/libbloom.$(SO): $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
+$(BUILD)/$(SO_VERSIONED): $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
 	(cd $(BUILD) && \
 	    $(COM) $(LDFLAGS) bloom.o murmurhash2.o -shared $(LIB) $(MAC) \
-		-Wl,-soname,$(BLOOM_SONAME) -o libbloom.$(SO) && \
-		cp -p libbloom.$(SO) libbloom.$(SO).$(BLOOM_VERSION) && \
-		ln -s libbloom.$(SO).$(BLOOM_VERSION) $(BLOOM_SONAME))
+		$(LD_SONAME) -o $(SO_VERSIONED) && \
+		rm -f $(BLOOM_SONAME) && ln -s $(SO_VERSIONED) $(BLOOM_SONAME) && \
+		rm -f libbloom.$(SO) && ln -s $(BLOOM_SONAME) libbloom.$(SO))
 
 $(BUILD)/libbloom.a: $(BUILD)/murmurhash2.o $(BUILD)/bloom.o
 	(cd $(BUILD) && ar rcs libbloom.a bloom.o murmurhash2.o)
 
-$(BUILD)/test-libbloom: $(TESTDIR)/test.c $(BUILD)/libbloom.$(SO)
+$(BUILD)/test-libbloom: $(TESTDIR)/test.c $(BUILD)/$(SO_VERSIONED)
 	$(COM) -I$(TOP) -c $(TESTDIR)/test.c -o $(BUILD)/test.o
 	(cd $(BUILD) && \
 	    $(COM) test.o -L$(BUILD) $(RPATH) -lbloom -o test-libbloom)
